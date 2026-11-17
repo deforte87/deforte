@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a1020">
+  <title>디포르테 | Personal Portfolio</title>
+  <style>
+    :root{
+      --bg:#080d19; --panel:#101a2d; --panel2:#14223a; --text:#f3f7ff;
+      --muted:#a8b5ca; --blue:#56a8ff; --lime:#c7f36b; --line:rgba(255,255,255,.11);
+      --max:1120px; --radius:24px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:88px}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,"Pretendard","Noto Sans KR",system-ui,sans-serif;line-height:1.65}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit}
+    .wrap{width:min(var(--max),calc(100% - 44px));margin:auto}
+    .nav{position:sticky;top:0;z-index:20;background:rgba(8,13,25,.82);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+    .nav-inner{height:76px;display:flex;align-items:center;justify-content:space-between}
+    .brand{font-weight:900;letter-spacing:.08em;font-size:1.08rem}
+    .brand span{color:var(--lime)}
+    .links{display:flex;gap:30px;color:var(--muted);font-size:.9rem}
+    .links a:hover,.links a.active{color:var(--lime)}
+    .menu-btn{display:none;background:none;color:var(--text);border:1px solid var(--line);border-radius:12px;padding:8px 12px}
+    .hero{min-height:690px;display:grid;align-items:center;position:relative;overflow:hidden}
+    .hero:before{content:"";position:absolute;width:560px;height:560px;right:-110px;top:45px;border-radius:50%;background:radial-gradient(circle,rgba(86,168,255,.23),rgba(86,168,255,0) 68%);pointer-events:none}
+    .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center;padding:92px 0}
+    .eyebrow{color:var(--lime);font-size:.78rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase}
+    h1{font-size:clamp(2.8rem,6.2vw,5.6rem);line-height:1.12;letter-spacing:-.055em;margin:22px 0}
+    h1 em{font-style:normal;color:var(--blue)}
+    .lead{font-size:1.15rem;color:var(--muted);max-width:600px}
+    .hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:13px 21px;border-radius:999px;font-weight:800;border:1px solid var(--line);transition:.2s}
+    .btn-primary{background:var(--lime);color:#101827;border-color:var(--lime)}
+    .btn:hover{transform:translateY(-3px)}
+    .btn-ghost:hover{border-color:var(--blue);color:var(--blue)}
+    .visual{min-height:410px;border:1px solid var(--line);border-radius:32px;background:linear-gradient(145deg,rgba(86,168,255,.14),rgba(199,243,107,.06)),var(--panel);position:relative;overflow:hidden;display:grid;place-items:center}
+    .visual:before,.visual:after{content:"";position:absolute;border:1px solid rgba(255,255,255,.12);border-radius:50%;width:310px;height:310px}
+    .visual:after{width:220px;height:220px}
+    .orb{width:155px;height:155px;border-radius:38%;transform:rotate(35deg);background:linear-gradient(135deg,var(--blue),#2455a0 55%,var(--lime));box-shadow:0 0 90px rgba(86,168,255,.35);display:grid;place-items:center;font-size:3rem;font-weight:900;color:#07101e}
+    .visual-label{position:absolute;bottom:25px;left:26px;color:var(--muted);font-size:.8rem;letter-spacing:.16em}
+    section{padding:105px 0}
+    .section-head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:38px}
+    .section-head h2{font-size:clamp(2rem,4vw,3.3rem);line-height:1.15;letter-spacing:-.04em;margin:9px 0 0}
+    .section-head p{max-width:430px;color:var(--muted);margin:0}
+    .about-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:22px}
+    .profile-card,.about-copy,.work-card,.contact-box{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius)}
+    .profile-card{padding:30px;display:flex;flex-direction:column;justify-content:space-between;min-height:340px}
+    .avatar{width:92px;height:92px;border-radius:27px;background:linear-gradient(135deg,var(--blue),var(--lime));display:grid;place-items:center;color:#08101d;font-size:2rem;font-weight:900}
+    .profile-card h3{font-size:1.7rem;margin:22px 0 2px}
+    .profile-card p{color:var(--muted);margin:0}
+    .tags{display:flex;gap:9px;flex-wrap:wrap;margin-top:22px}
+    .tag{font-size:.78rem;padding:7px 12px;border-radius:999px;background:rgba(86,168,255,.1);color:#a9d4ff;border:1px solid rgba(86,168,255,.2)}
+    .about-copy{padding:34px}
+    .about-copy h3{font-size:1.35rem;margin:0 0 14px}
+    .about-copy p{color:var(--muted);margin:0 0 18px}
+    .traits{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:28px}
+    .trait{padding:18px 15px;background:var(--panel2);border-radius:16px}
+    .trait b{display:block;color:var(--lime);font-size:.85rem;margin-bottom:6px}
+    .trait span{font-size:.9rem}
+    .work-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+    .work-card{overflow:hidden}
+    .work-art{height:210px;display:grid;place-items:center;position:relative;overflow:hidden;background:linear-gradient(135deg,#162c4b,#0c1425)}
+    .work-art.futsal{background:linear-gradient(135deg,#203b36,#101b2b)}
+    .work-art:before{content:"";position:absolute;width:230px;height:230px;border:1px solid rgba(255,255,255,.2);border-radius:50%}
+    .art-symbol{font-size:4rem;filter:drop-shadow(0 8px 22px rgba(0,0,0,.35))}
+    .work-content{padding:27px}
+    .work-content .number{font-size:.75rem;color:var(--lime);letter-spacing:.15em;font-weight:800}
+    .work-content h3{font-size:1.5rem;margin:8px 0}
+    .work-content p{color:var(--muted);margin:0}
+    .result{margin-top:20px;padding-top:17px;border-top:1px solid var(--line);font-size:.9rem}
+    .result strong{color:var(--blue)}
+    .quote{margin-top:14px;color:var(--lime);font-weight:800}
+    .goal{margin-top:22px;padding:25px 28px;border-radius:20px;background:linear-gradient(100deg,rgba(86,168,255,.13),rgba(199,243,107,.08));border:1px solid var(--line)}
+    .goal b{color:var(--lime)}
+    .contact-box{padding:42px;display:flex;justify-content:space-between;align-items:center;gap:28px}
+    .contact-box h3{font-size:1.8rem;margin:0 0 8px}
+    .contact-box p{color:var(--muted);margin:0}
+    .email{color:var(--lime);font-weight:800;overflow-wrap:anywhere}
+    footer{padding:28px 0;border-top:1px solid var(--line);color:#7f8da5;font-size:.82rem}
+    .footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+    .note{font-size:.78rem;color:#8795aa;margin-top:18px}
+    .reveal{opacity:0;transform:translateY(18px);transition:opacity .65s,transform .65s}
+    .reveal.show{opacity:1;transform:none}
+    @media(max-width:760px){
+      .wrap{width:min(100% - 32px,var(--max))}
+      .nav-inner{height:68px}
+      .menu-btn{display:block}
+      .links{display:none;position:absolute;top:68px;left:0;right:0;background:#0b1323;padding:18px 24px 24px;flex-direction:column;gap:16px;border-bottom:1px solid var(--line)}
+      .links.open{display:flex}
+      .hero{min-height:auto}
+      .hero-grid{grid-template-columns:1fr;gap:35px;padding:76px 0}
+      .visual{min-height:300px}
+      section{padding:76px 0}
+      .section-head{display:block}
+      .section-head p{margin-top:15px}
+      .about-grid,.work-grid{grid-template-columns:1fr}
+      .traits{grid-template-columns:1fr}
+      .contact-box{padding:28px;display:block}
+      .contact-box .btn{margin-top:22px}
+    }
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none;transition:none}.btn{transition:none}}
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#home">D<span>.</span>FORTE</a>
+      <button class="menu-btn" id="menuBtn" aria-label="메뉴 열기" aria-expanded="false">MENU</button>
+      <nav class="links" id="navLinks" aria-label="주요 메뉴">
+        <a href="#home">HOME</a><a href="#about">ABOUT</a><a href="#work">WORK</a><a href="#contact">CONTACT</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="wrap hero-grid">
+        <div class="reveal">
+          <div class="eyebrow">PERSONAL PORTFOLIO · D.FORTE</div>
+          <h1>안녕하세요!<br><em>AI를 다루는</em><br>군인입니다.</h1>
+          <p class="lead">도전하고, 직접 경험하며, 새로운 가능성을 만들어 갑니다.<br>군인의 책임감과 AI 창작의 즐거움을 함께 기록합니다.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#work">활동 보러 가기 <span>↗</span></a>
+            <a class="btn btn-ghost" href="#about">나를 소개합니다</a>
+          </div>
+        </div>
+        <div class="visual reveal" role="img" aria-label="AI와 도전을 상징하는 추상 그래픽">
+          <div class="orb">AI</div>
+          <div class="visual-label">CREATE · CHALLENGE · GROW</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div><div class="eyebrow">01 / ABOUT ME</div><h2>저를 소개합니다.</h2></div>
+          <p>현재의 일상과 관심사, 앞으로 도전하고 싶은 일을 담았습니다.</p>
+        </div>
+        <div class="about-grid">
+          <article class="profile-card reveal">
+            <div>
+              <div class="avatar">DF</div>
+              <h3>디포르테</h3>
+              <p>군인 · AI 창작에 관심 있는 도전자</p>
+            </div>
+            <div class="tags"><span class="tag">ENTJ</span><span class="tag">적극적</span><span class="tag">인내</span><span class="tag">도전</span></div>
+          </article>
+          <article class="about-copy reveal">
+            <h3>새로운 것을 배우고 직접 만들어 보는 사람</h3>
+            <p>저는 군인입니다. 멀티미디어를 전공했으며, 취미로 AI 창작을 즐기고 있습니다. 게임과 AI 창작, 동영상 편집에 관심이 있고 새로운 기술을 직접 경험하는 것을 좋아합니다.</p>
+            <p>앞으로는 AI를 활용해 웹사이트와 애플리케이션을 직접 만들며 아이디어를 실제 결과물로 발전시키고 싶습니다.</p>
+            <div class="traits">
+              <div class="trait"><b>MY STRENGTH</b><span>도전하고<br>직접 경험하기</span></div>
+              <div class="trait"><b>MY INTEREST</b><span>새로운 것 배우기<br>그리고 여행</span></div>
+              <div class="trait"><b>NOW LEARNING</b><span>AI 웹사이트·<br>앱 제작</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div><div class="eyebrow">02 / ACTIVITIES</div><h2>경험이 나를 만듭니다.</h2></div>
+          <p>일과 취미 속에서 배우고 느낀 점을 기록합니다.</p>
+        </div>
+        <div class="work-grid">
+          <article class="work-card reveal">
+            <div class="work-art"><div class="art-symbol">🪖</div></div>
+            <div class="work-content">
+              <div class="number">ACTIVITY 01</div>
+              <h3>군인으로서의 도전</h3>
+              <p>군인으로 활동하며 맡은 역할에 적극적으로 임하고, 다양한 환경에서 경험을 쌓아가고 있습니다.</p>
+              <div class="result"><strong>경험 장소·이력</strong><br>35사단 · 포병학교 · 25사단 근무</div>
+              <div class="quote">“야, 너두! 군인 어때?”</div>
+            </div>
+          </article>
+          <article class="work-card reveal">
+            <div class="work-art futsal"><div class="art-symbol">⚽</div></div>
+            <div class="work-content">
+              <div class="number">ACTIVITY 02</div>
+              <h3>풋살로 건강하게!</h3>
+              <p>주중 2~3회 풋살 경기를 즐기며 몸과 마음에 활력을 더하고, 함께 뛰는 사람들과 친분을 쌓습니다.</p>
+              <div class="result"><strong>활동 빈도</strong><br>주중 2~3회</div>
+              <div class="quote">“함께 뛰고, 건강하게 성장하기.”</div>
+            </div>
+          </article>
+        </div>
+        <div class="goal reveal"><b>NEXT CHALLENGE</b><br>AI를 활용한 웹사이트 제작을 넘어, 나만의 애플리케이션을 직접 만드는 것이 다음 목표입니다.</div>
+        <p class="note">※ 군 관련 근무 이력과 부대명은 공개 가능한 정보인지 확인한 후 실제 사이트 게시를 진행하세요.</p>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div><div class="eyebrow">03 / CONTACT</div><h2>이야기를 나눠요.</h2></div>
+          <p>궁금한 점이나 함께 나누고 싶은 이야기가 있다면 이메일로 연락해 주세요.</p>
+        </div>
+        <div class="contact-box reveal">
+          <div><h3>함께 연결될 준비가 되어 있습니다.</h3><p>공유하고 싶은 아이디어와 새로운 도전을 환영합니다.</p><p style="margin-top:14px"><a class="email" href="mailto:Lch2332@naver.com">Lch2332@naver.com</a></p></div>
+          <a class="btn btn-primary" href="mailto:Lch2332@naver.com?subject=%EB%94%94%ED%8F%AC%EB%A5%B4%ED%85%8C%20%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4%20%EB%AC%B8%EC%9D%98">이메일 보내기 ↗</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner"><span>© <span id="year"></span> D.FORTE. All rights reserved.</span><span>CREATE · CHALLENGE · GROW</span></div>
+  </footer>
+
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+    menuBtn.addEventListener('click', () => {
+      const opened = navLinks.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', String(opened));
+    });
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold: 0.12});
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    const sections = document.querySelectorAll('main section[id]');
+    const navItems = document.querySelectorAll('.links a');
+    const navObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navItems.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id));
+        }
+      });
+    }, {rootMargin: '-35% 0px -55% 0px'});
+    sections.forEach(section => navObserver.observe(section));
+  </script>
+</body>
+</html>
